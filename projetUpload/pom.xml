@@ -48,8 +48,8 @@
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>${org.apache.commons.version}</version>
+      <artifactId>commons-text</artifactId>
+      <version>1.8</version>
     </dependency>
   </dependencies>
 

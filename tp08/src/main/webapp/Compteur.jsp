@@ -19,10 +19,10 @@
     }
     global.incr();
 
-    Compteur local = (Compteur) application.getAttribute("local");
+    Compteur local = (Compteur) session.getAttribute("local");
     if(local == null){
         local = new Compteur();
-        application.setAttribute("local",local);
+        session.setAttribute("local",local);
     }
     local.incr();
 %>
