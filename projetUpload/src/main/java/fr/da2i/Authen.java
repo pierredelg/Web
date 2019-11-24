@@ -15,15 +15,12 @@ public class Authen extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res ) {
 
-        System.out.println("SERVLET AUTHEN");
         String contextPath = req.getServletContext().getContextPath();
-        String identificateur = req.getParameter("identificateur");
-        System.out.println("identificateur : " + identificateur);
+        String identificateur = StringEscapeUtils.escapeHtml4(req.getParameter("identificateur"));
 
         /* Vérification afin de savoir si l'utilisateur s'est enregistré*/
         if (identificateur == null) {
             try {
-                System.out.println("FIN SERVLET AUTHEN");
                 res.sendRedirect(contextPath + "/login.html");
             } catch (IOException e) {
                 e.getMessage();
@@ -36,9 +33,7 @@ public class Authen extends HttpServlet {
             String driverBDD = getServletContext().getInitParameter("driverBDD");
 
             String login = StringEscapeUtils.escapeHtml4(req.getParameter("login"));
-            System.out.println("login = " + login);
             String mdp = StringEscapeUtils.escapeHtml4(req.getParameter("mdp"));
-            System.out.println("mdp = " + mdp);
 
             try {
                 //On charge le driver
@@ -57,7 +52,6 @@ public class Authen extends HttpServlet {
 
             //On constitue la requete select
             String query = "select * from personne where login=? and mdp=?;";
-            System.out.println(query);
 
             PreparedStatement ps = null;
             try {
@@ -91,19 +85,16 @@ public class Authen extends HttpServlet {
                 System.out.println(e.getMessage());
             }
             HttpSession session = req.getSession();
-            System.out.println(login != null && login.equals(loginFromBDD) && mdp != null && mdp.equals(mdpFromBDD));
             if (login != null && login.equals(loginFromBDD) && mdp != null && mdp.equals(mdpFromBDD)) {
                 try {
                     session.setAttribute("nomUser",nomFromBDD);
                     session.setAttribute("identificateur", "File.jsp");
-                    System.out.println("FIN SERVLET AUTHEN");
                     res.sendRedirect(contextPath + "/File.jsp");
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
             } else {
                 try {
-                    System.out.println("FIN SERVLET AUTHEN");
                     res.sendRedirect(contextPath + "/login.html");
                 } catch (IOException e) {
                     System.out.println(e.getMessage());

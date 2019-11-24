@@ -1,15 +1,16 @@
 package fr.da2i;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.*;
 
-@WebServlet("/Upload")
-@MultipartConfig
-public class Upload extends HttpServlet {
+@WebServlet("/Delete")
+public class Delete extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res ) {
         /*Redirection sur la page de login*/
         String contextPath = req.getContextPath();
@@ -19,7 +20,6 @@ public class Upload extends HttpServlet {
             e.getMessage();
         }
     }
-
     public void doPost(HttpServletRequest req, HttpServletResponse res ) {
 
         String contextPath = req.getServletContext().getContextPath();
@@ -33,45 +33,44 @@ public class Upload extends HttpServlet {
             } catch (IOException e) {
                 e.getMessage();
             }
-        } else {
+        }
+        else {
             String nomUtilisateur = (String) session.getAttribute("nomUser");
 
-            String cheminDossier = "users" + File.separator + nomUtilisateur;
-
-            // On récupere le chemin de la servlet
             String applicationPath = req.getServletContext().getRealPath("");
+            String filename = req.getParameter("fichierDelete");
 
-            // On construit le chemin complet du dossier de l'utilisateur
-            String uploadFilePath = applicationPath + File.separator + cheminDossier;
+            String fullPath = applicationPath + File.separator + nomUtilisateur + File.separator + filename;
+            System.out.println("fullPath = "+ fullPath);
 
-            try {
-                String fileName;
-                //On récupere chaques partie de la requete
-                for (Part part : req.getParts()) {
-                    fileName = getFileName(part);
-                    part.write(uploadFilePath + File.separator + fileName);
+            File file = new File(fullPath);
+            boolean ecriture = file.setWritable(true);
+            System.out.println("ecriture = " + ecriture);
+                try
+                {
+                    Files.deleteIfExists(Paths.get(fullPath));
                 }
-            }catch (IOException | ServletException e){
-                System.out.println(e.getMessage());
-            }
+                catch(NoSuchFileException e)
+                {
+                    System.out.println("No such file/directory exists");
+                }
+                catch(DirectoryNotEmptyException e)
+                {
+                    System.out.println("Directory is not empty.");
+                }
+                catch(IOException e)
+                {
+                    System.out.println("Invalid permissions.");
+                }
+
+                System.out.println("Deletion successful.");
 
             try {
                 res.sendRedirect(contextPath + "/File.jsp");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-    }
-
-    private String getFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] tokens = contentDisp.split(";");
-        for (String token : tokens) {
-            if (token.trim().startsWith("filename")) {
-                return token.substring(token.indexOf("=") + 2, token.length()-1);
-            }
-        }
-        return "";
     }
 }
+
