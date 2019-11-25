@@ -10,8 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
+/**
+ * Servlet permettant de créer un nouvel utilisateur.
+ * Ainsi que lui creer son dossier personnel sur le serveur.
+ */
 @WebServlet("/Creation")
 public class Creation extends HttpServlet {
+    public static String NOM_DOSSIER_FICHIER = "users";
     public void doGet(HttpServletRequest req, HttpServletResponse res ) {
 
         /*Redirection sur la page de login*/
@@ -75,6 +80,8 @@ public class Creation extends HttpServlet {
                     rs = ps1.executeQuery();
                 }
 
+                System.out.println(rs);
+                //Si l'utilisateur est inconnu la requete ne donnera aucun resultat
                 if(rs == null || ! rs.next()) {
 
                     //On constitue la requete insert
@@ -93,8 +100,9 @@ public class Creation extends HttpServlet {
                     }
 
                     try {
+                        //On crée le dossier de l'utilisateur dans le dossier users
                         Runtime.getRuntime().exec("mkdir "+ nom, null, new
-                                File(getServletContext().getRealPath("/users"))).waitFor();
+                                File(getServletContext().getRealPath("/"+ NOM_DOSSIER_FICHIER))).waitFor();
                     } catch (InterruptedException | IOException e) {
                         e.printStackTrace();
                     }

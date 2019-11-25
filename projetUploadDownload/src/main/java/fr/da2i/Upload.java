@@ -7,6 +7,9 @@ import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Servlet permettant l'upload d'un ou de plusieurs fichiers sélectionnés.
+ */
 @WebServlet("/Upload")
 @MultipartConfig
 public class Upload extends HttpServlet {
@@ -36,7 +39,7 @@ public class Upload extends HttpServlet {
         } else {
             String nomUtilisateur = (String) session.getAttribute("nomUser");
 
-            String cheminDossier = "users" + File.separator + nomUtilisateur;
+            String cheminDossier = Creation.NOM_DOSSIER_FICHIER + File.separator + nomUtilisateur;
 
             // On récupere le chemin de la servlet
             String applicationPath = req.getServletContext().getRealPath("");
@@ -48,7 +51,9 @@ public class Upload extends HttpServlet {
                 String fileName;
                 //On récupere chaques partie de la requete
                 for (Part part : req.getParts()) {
+                    //On récupere le nom du fichier
                     fileName = getFileName(part);
+                    //On écrit le fichier dans le dossier de l'utilisateur
                     part.write(uploadFilePath + File.separator + fileName);
                 }
             }catch (IOException | ServletException e){
@@ -64,6 +69,7 @@ public class Upload extends HttpServlet {
         }
     }
 
+    //Méthode permettant de retourner le nom du fichier
     private String getFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] tokens = contentDisp.split(";");

@@ -7,11 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
 
 @WebServlet("/Delete")
 public class Delete extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res ) {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
         /*Redirection sur la page de login*/
         String contextPath = req.getContextPath();
         try {
@@ -20,7 +19,8 @@ public class Delete extends HttpServlet {
             e.getMessage();
         }
     }
-    public void doPost(HttpServletRequest req, HttpServletResponse res ) {
+
+    public void doPost(HttpServletRequest req, HttpServletResponse res) {
 
         String contextPath = req.getServletContext().getContextPath();
         HttpSession session = req.getSession();
@@ -33,37 +33,28 @@ public class Delete extends HttpServlet {
             } catch (IOException e) {
                 e.getMessage();
             }
-        }
-        else {
+        } else {
+            //On récupere le nom de l'utilisateur en session
             String nomUtilisateur = (String) session.getAttribute("nomUser");
 
-            String applicationPath = req.getServletContext().getRealPath("");
+            //On récupere le nom du fichier à supprimer
             String filename = req.getParameter("fichierDelete");
 
-            String fullPath = applicationPath + File.separator + nomUtilisateur + File.separator + filename;
-            System.out.println("fullPath = "+ fullPath);
+            //On récupère le chemin du context
+            String applicationPath = req.getServletContext().getRealPath("");
+
+            //On construit le chemin vers le fichier à supprimer
+            String fullPath = applicationPath + File.separator + "users" + File.separator + nomUtilisateur + File.separator + filename;
 
             File file = new File(fullPath);
-            boolean ecriture = file.setWritable(true);
-            System.out.println("ecriture = " + ecriture);
-                try
-                {
-                    Files.deleteIfExists(Paths.get(fullPath));
-                }
-                catch(NoSuchFileException e)
-                {
-                    System.out.println("No such file/directory exists");
-                }
-                catch(DirectoryNotEmptyException e)
-                {
-                    System.out.println("Directory is not empty.");
-                }
-                catch(IOException e)
-                {
-                    System.out.println("Invalid permissions.");
-                }
 
-                System.out.println("Deletion successful.");
+            //On ajoute les droits d'écriture si on ne les as pas deja
+            if(!file.canWrite()) {
+               file.setWritable(true);
+            }
+
+            //On supprime le fichier
+            boolean delete = file.delete();
 
             try {
                 res.sendRedirect(contextPath + "/File.jsp");

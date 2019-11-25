@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * Servlet permettant de télécharger un fichier à partir du dossier d'un utilisateur.
+ */
 @WebServlet("/Download")
 public class Download extends HttpServlet {
 
@@ -39,24 +42,38 @@ public class Download extends HttpServlet {
             }
         } else {
 
+            //On récupere le nom de l'utilisateur en session
             String nomUser = (String) session.getAttribute("nomUser");
+
+            //On récupere le nom du fichier à télécharger en parametre
             String fichierDownload = req.getParameter("fichierDownload");
+
+            //On ajoute le type à la réponse
             res.setContentType("text/plain");
+
+            //On ajoute le nom du fichier
             res.setHeader("Content-disposition", "attachment; filename=" + fichierDownload);
-            InputStream in = req.getServletContext().getResourceAsStream("./users/" + nomUser + "/" + fichierDownload);
+
+            //On crée le flux sur le fichier à télécharger
+            InputStream in = req.getServletContext().getResourceAsStream("./"+ Creation.NOM_DOSSIER_FICHIER +"/" + nomUser + "/" + fichierDownload);
+
             OutputStream outputStream = null;
             try {
+                //On initialise le flux sortant
                 outputStream = res.getOutputStream();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
 
+            //On crée le buffer
             byte[] buffer = new byte[TAILLE_BUFFER];
 
             int numBytesRead;
             try {
+                //tant que le buffer n'est pas vide
                 while (in != null && (numBytesRead = in.read(buffer)) > 0) {
                     if (outputStream != null) {
+                        //On écrit dans le flux sortant
                         outputStream.write(buffer, 0, numBytesRead);
                     }
                 }

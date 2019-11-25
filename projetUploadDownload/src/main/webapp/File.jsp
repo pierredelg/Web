@@ -12,9 +12,9 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
     <%@ page import="java.io.File" %>
     <%@ page import="java.io.IOException" %>
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column" style="background-color: #ebebeb">
 <%
-    /* Vérification afin de savoir si l'utilisateur s'est enregistrer*/
+    /* Vérification afin de savoir si l'utilisateur s'est enregistré*/
     String contextPath = application.getContextPath();
     String servletPath = request.getServletContext().getRealPath("");
     if (session.getAttribute("identificateur") == null) {
@@ -27,28 +27,33 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
         String nomUser = (String) session.getAttribute("nomUser");
 %>
 <%-- Barre du haut avec le titre --%>
-<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark d-flex justify-content-between">
     <div class="col-md-6 px-0">
         <h1 class="display-4 font-italic">Bienvenue <%=nomUser%>
         </h1>
         <p class="lead my-3">Vous pouvez uploader les fichiers que vous souhaitez garder sur notre serveur ou
             télécharger les fichiers contenus dans la liste.</p>
     </div>
+    <div>
+        <form action="<%=contextPath%>/Disconnect" method="get">
+            <button type="submit" class="btn btn-lg btn-success">  Déconnexion  </button>
+        </form>
+    </div>
 </div>
 <div class="container"><br/>
     <%-- Panel principal--%>
-    <div class="panel panel-default">
+    <div class="panel" style="border-color: #ebebeb">
         <%-- Premier panel pour l'upload --%>
-        <div class="panel-default">
+        <div style="background-color: #ebebeb">
             <%-- Titre du panel upload --%>
-            <div class="panel panel-heading bg-success">
+            <div class="panel panel-heading bg-dark">
                 <strong class="panel-title text-white">Upload d'un document</strong>
             </div>
                 <form action="<%=contextPath%>/Upload" method="post" enctype='multipart/form-data'>
                     <div class="input-group">
                         <label class="input-group-btn">
                             <span class="btn btn-success">
-                                Choisir <input type="file" style="display: none;" name="fichierUpload" multiple="true">
+                                Choisissez vos fichiers<input type="file" style="display: none;" name="fichierUpload" multiple="true">
                             </span>
                         </label>
                         <input type="text" class="form-control" readonly>
@@ -65,7 +70,7 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
     <%-- Panel avec la liste des fichiers --%>
     <div class="panel panel-default">
         <%-- Titre du panel pour les fichiers --%>
-        <div class="panel-heading bg-success">
+        <div class="panel-heading bg-dark">
             <strong class="panel-title text-white">Vos documents</strong>
         </div>
         <%-- Tableau contenant la liste les fichiers --%>
@@ -81,6 +86,7 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
 
             <%
                 /*Liste des fichiers du dossier utilisateur*/
+
                 File file = new File(servletPath + "/users/" + nomUser + "/");
                 String[] list = file.list();
                 int numeroDeFichier = 0;

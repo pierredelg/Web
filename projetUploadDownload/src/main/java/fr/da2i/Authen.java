@@ -10,15 +10,29 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 
+/**
+ * Servlet permettant de vérifier si l'utilisateur s'est déja enregistrer
+ * (s'il est présent dans la base de données)
+ */
 @WebServlet("/Authen")
 public class Authen extends HttpServlet {
+
+    public void doGet(HttpServletRequest req, HttpServletResponse res ) {
+        /*Redirection sur la page de login*/
+        String contextPath = req.getContextPath();
+        try {
+            res.sendRedirect(contextPath + "/login.html");
+        } catch (IOException e) {
+            e.getMessage();
+        }
+    }
 
     public void doPost(HttpServletRequest req, HttpServletResponse res ) {
 
         String contextPath = req.getServletContext().getContextPath();
         String identificateur = StringEscapeUtils.escapeHtml4(req.getParameter("identificateur"));
 
-        /* Vérification afin de savoir si l'utilisateur s'est enregistré*/
+        /* Vérification afin de savoir si l'utilisateur est passé par la page de login*/
         if (identificateur == null) {
             try {
                 res.sendRedirect(contextPath + "/login.html");
@@ -76,15 +90,18 @@ public class Authen extends HttpServlet {
             String mdpFromBDD = null;
             String nomFromBDD = null;
             try {
+                //On récupere le nom, le login et le mot de passe dans la base de données
                 while (rs != null && rs.next()) {
+                    nomFromBDD = rs.getString("nom");
                     loginFromBDD = rs.getString("login");
                     mdpFromBDD = rs.getString("mdp");
-                    nomFromBDD = rs.getString("nom");
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
             HttpSession session = req.getSession();
+
+            //On compare les champs afin de savoir s'il sont correct
             if (login != null && login.equals(loginFromBDD) && mdp != null && mdp.equals(mdpFromBDD)) {
                 try {
                     session.setAttribute("nomUser",nomFromBDD);
