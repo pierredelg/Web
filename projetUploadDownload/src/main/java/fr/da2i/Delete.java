@@ -8,6 +8,9 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Servlet permettant de supprimer un fichier du dossier de l'utilisateur.
+ */
 @WebServlet("/Delete")
 public class Delete extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res) {
@@ -16,7 +19,7 @@ public class Delete extends HttpServlet {
         try {
             res.sendRedirect(contextPath + "/login.html");
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -31,11 +34,11 @@ public class Delete extends HttpServlet {
             try {
                 res.sendRedirect(contextPath + "/login.html");
             } catch (IOException e) {
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         } else {
             //On récupere le nom de l'utilisateur en session
-            String nomUtilisateur = (String) session.getAttribute("nomUser");
+            String nomDossier = (String) session.getAttribute("nomDossier");
 
             //On récupere le nom du fichier à supprimer
             String filename = req.getParameter("fichierDelete");
@@ -44,7 +47,7 @@ public class Delete extends HttpServlet {
             String applicationPath = req.getServletContext().getRealPath("");
 
             //On construit le chemin vers le fichier à supprimer
-            String fullPath = applicationPath + File.separator + "users" + File.separator + nomUtilisateur + File.separator + filename;
+            String fullPath = applicationPath + File.separator + "users" + File.separator + nomDossier + File.separator + filename;
 
             File file = new File(fullPath);
 
@@ -55,11 +58,19 @@ public class Delete extends HttpServlet {
 
             //On supprime le fichier
             boolean delete = file.delete();
-
-            try {
-                res.sendRedirect(contextPath + "/File.jsp");
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(!delete) {
+                session.setAttribute("erreur","Le fichier n'a pas pu être supprimé");
+                try {
+                    res.sendRedirect(contextPath + "/Error.jsp");
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }else {
+                try {
+                    res.sendRedirect(contextPath + "/File.jsp");
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }

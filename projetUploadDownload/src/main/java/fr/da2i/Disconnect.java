@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet permettant de déconnecter un utilisateur
+ * Servlet permettant de déconnecter un utilisateur.
  */
 @WebServlet("/Disconnect")
 public class Disconnect extends HttpServlet {
@@ -30,7 +30,7 @@ public class Disconnect extends HttpServlet {
         try {
             res.sendRedirect(contextPath + "/login.html");
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 }

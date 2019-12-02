@@ -23,7 +23,7 @@ public class Download extends HttpServlet {
         try {
             res.sendRedirect(contextPath + "/login.html");
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -38,12 +38,12 @@ public class Download extends HttpServlet {
             try {
                 res.sendRedirect(contextPath + "/login.html");
             } catch (IOException e) {
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         } else {
 
-            //On récupere le nom de l'utilisateur en session
-            String nomUser = (String) session.getAttribute("nomUser");
+            //On récupere le nom du dossier de l'utilisateur en session
+            String nomDossier = (String) session.getAttribute("nomDossier");
 
             //On récupere le nom du fichier à télécharger en parametre
             String fichierDownload = req.getParameter("fichierDownload");
@@ -55,14 +55,14 @@ public class Download extends HttpServlet {
             res.setHeader("Content-disposition", "attachment; filename=" + fichierDownload);
 
             //On crée le flux sur le fichier à télécharger
-            InputStream in = req.getServletContext().getResourceAsStream("./"+ Creation.NOM_DOSSIER_FICHIER +"/" + nomUser + "/" + fichierDownload);
+            InputStream in = req.getServletContext().getResourceAsStream("./"+ Creation.NOM_DOSSIER_UTILISATEURS +"/" + nomDossier + "/" + fichierDownload);
 
             OutputStream outputStream = null;
             try {
                 //On initialise le flux sortant
                 outputStream = res.getOutputStream();
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
 
             //On crée le buffer
@@ -78,7 +78,7 @@ public class Download extends HttpServlet {
                     }
                 }
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
 
             try {
@@ -89,7 +89,17 @@ public class Download extends HttpServlet {
                     outputStream.close();
                 }
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
+            }
+
+            String erreur = (String) session.getAttribute("erreur");
+
+            if(erreur != null && !erreur.isEmpty()) {
+                try {
+                    res.sendRedirect(contextPath + "/Error.jsp");
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }

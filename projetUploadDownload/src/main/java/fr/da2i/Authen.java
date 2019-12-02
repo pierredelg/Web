@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.*;
 
 /**
- * Servlet permettant de vérifier si l'utilisateur s'est déja enregistrer
+ * Servlet permettant de vérifier si l'utilisateur s'est déja enregistré
  * (s'il est présent dans la base de données)
  */
 @WebServlet("/Authen")
@@ -23,12 +23,13 @@ public class Authen extends HttpServlet {
         try {
             res.sendRedirect(contextPath + "/login.html");
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse res ) {
 
+        HttpSession session = req.getSession();
         String contextPath = req.getServletContext().getContextPath();
         String identificateur = StringEscapeUtils.escapeHtml4(req.getParameter("identificateur"));
 
@@ -37,7 +38,7 @@ public class Authen extends HttpServlet {
             try {
                 res.sendRedirect(contextPath + "/login.html");
             } catch (IOException e) {
-                e.getMessage();
+                session.setAttribute("erreur",e.getMessage());
             }
         } else {
 
@@ -53,7 +54,7 @@ public class Authen extends HttpServlet {
                 //On charge le driver
                 Class.forName(driverBDD);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
 
             Connection con = null;
@@ -61,7 +62,7 @@ public class Authen extends HttpServlet {
                 //On ouvre la connexion
                 con = DriverManager.getConnection(urlBDD, loginBDD, mdpBDD);
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
 
             //On constitue la requete select
@@ -75,7 +76,7 @@ public class Authen extends HttpServlet {
                     ps.setString(2, mdp);
                 }
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
 
             ResultSet rs = null;
@@ -84,40 +85,23 @@ public class Authen extends HttpServlet {
                     rs = ps.executeQuery();
                 }
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
             String loginFromBDD = null;
             String mdpFromBDD = null;
             String nomFromBDD = null;
+            int idFromBDD = 0;
             try {
                 //On récupere le nom, le login et le mot de passe dans la base de données
                 while (rs != null && rs.next()) {
+                    idFromBDD = rs.getInt("id");
                     nomFromBDD = rs.getString("nom");
                     loginFromBDD = rs.getString("login");
                     mdpFromBDD = rs.getString("mdp");
                 }
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
-            HttpSession session = req.getSession();
-
-            //On compare les champs afin de savoir s'il sont correct
-            if (login != null && login.equals(loginFromBDD) && mdp != null && mdp.equals(mdpFromBDD)) {
-                try {
-                    session.setAttribute("nomUser",nomFromBDD);
-                    session.setAttribute("identificateur", "File.jsp");
-                    res.sendRedirect(contextPath + "/File.jsp");
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            } else {
-                try {
-                    res.sendRedirect(contextPath + "/login.html");
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
             try {
                 //On ferme la connexion
                 if (con != null) {
@@ -125,7 +109,32 @@ public class Authen extends HttpServlet {
                 }
 
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
+            }
+
+            String erreur = (String) session.getAttribute("erreur");
+            if(erreur == null || erreur.isEmpty()) {
+                //On compare les champs afin de savoir s'il sont correct
+                if (login != null && login.equals(loginFromBDD) && mdp != null && mdp.equals(mdpFromBDD)) {
+                    try {
+                        session.setAttribute("nomUser",nomFromBDD);
+                        session.setAttribute("nomDossier",idFromBDD+nomFromBDD);
+                        session.setAttribute("identificateur", "File.jsp");
+                        res.sendRedirect(contextPath + "/File.jsp");
+                    } catch (IOException e) {
+                        session.setAttribute("erreur",e.getMessage());
+                    }
+                } else {
+                   session.setAttribute("erreur","Utilisateur est inconnu, créez un compte afin de vous connecter.");
+                }
+            }
+            erreur = (String) session.getAttribute("erreur");
+            if(erreur != null && !erreur.isEmpty()) {
+                try {
+                    res.sendRedirect(contextPath + "/Error.jsp");
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }

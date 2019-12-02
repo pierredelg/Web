@@ -11,6 +11,7 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
     <%@ page contentType="text/html;charset=UTF-8" %>
     <%@ page import="java.io.File" %>
     <%@ page import="java.io.IOException" %>
+    <%@ page errorPage="Error.jsp" %>
 </head>
 <body class="d-flex flex-column" style="background-color: #ebebeb">
 <%
@@ -25,6 +26,7 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
         }
     } else {
         String nomUser = (String) session.getAttribute("nomUser");
+        String nomDossier = (String) session.getAttribute("nomDossier");
 %>
 <%-- Barre du haut avec le titre --%>
 <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark d-flex justify-content-between">
@@ -50,10 +52,11 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
                 <strong class="panel-title text-white">Upload d'un document</strong>
             </div>
                 <form action="<%=contextPath%>/Upload" method="post" enctype='multipart/form-data'>
+                    <%-- <form action="<%=contextPath%>/UploadFileApache" method="post" enctype='multipart/form-data'> --%>
                     <div class="input-group">
                         <label class="input-group-btn">
                             <span class="btn btn-success">
-                                Choisissez vos fichiers<input type="file" style="display: none;" name="fichierUpload" multiple="true">
+                                Choisissez vos fichiers<input type="file" style="display: none;" name="fichierUpload" multiple="true" accept="*/*">
                             </span>
                         </label>
                         <input type="text" class="form-control" readonly>
@@ -87,9 +90,8 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
             <%
                 /*Liste des fichiers du dossier utilisateur*/
 
-                File file = new File(servletPath + "/users/" + nomUser + "/");
+                File file = new File(servletPath + "/users/" + nomDossier + "/");
                 String[] list = file.list();
-                int numeroDeFichier = 0;
                 for (String fichierPresent : list) {
                     if (fichierPresent != null) {
             %>

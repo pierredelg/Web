@@ -11,7 +11,7 @@ import java.io.IOException;
  * Servlet permettant l'upload d'un ou de plusieurs fichiers sélectionnés.
  */
 @WebServlet("/Upload")
-@MultipartConfig
+@MultipartConfig(maxFileSize = 10*1024*1024,maxRequestSize = 20*1024*1024,fileSizeThreshold = 5*1024*1024)
 public class Upload extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res ) {
         /*Redirection sur la page de login*/
@@ -19,7 +19,7 @@ public class Upload extends HttpServlet {
         try {
             res.sendRedirect(contextPath + "/login.html");
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -34,12 +34,12 @@ public class Upload extends HttpServlet {
             try {
                 res.sendRedirect(contextPath + "/login.html");
             } catch (IOException e) {
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         } else {
-            String nomUtilisateur = (String) session.getAttribute("nomUser");
+            String nomDossier = (String) session.getAttribute("nomDossier");
 
-            String cheminDossier = Creation.NOM_DOSSIER_FICHIER + File.separator + nomUtilisateur;
+            String cheminDossier = Creation.NOM_DOSSIER_UTILISATEURS + File.separator + nomDossier;
 
             // On récupere le chemin de la servlet
             String applicationPath = req.getServletContext().getRealPath("");
@@ -53,28 +53,41 @@ public class Upload extends HttpServlet {
                 for (Part part : req.getParts()) {
                     //On récupere le nom du fichier
                     fileName = getFileName(part);
-                    //On écrit le fichier dans le dossier de l'utilisateur
-                    part.write(uploadFilePath + File.separator + fileName);
+                    if(!fileName.isEmpty()) {
+                        //On écrit le fichier dans le dossier de l'utilisateur
+                        part.write(uploadFilePath + File.separator + fileName);
+                    }
                 }
             }catch (IOException | ServletException e){
-                System.out.println(e.getMessage());
+                session.setAttribute("erreur",e.getMessage());
             }
-
-            try {
-                res.sendRedirect(contextPath + "/File.jsp");
-            } catch (IOException e) {
-                e.printStackTrace();
+            String erreur = (String) session.getAttribute("erreur");
+            if(erreur != null && !erreur.isEmpty()) {
+                try {
+                    res.sendRedirect(contextPath + "/Error.jsp");
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }else {
+                try {
+                    res.sendRedirect(contextPath + "/File.jsp");
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
-
         }
     }
 
     //Méthode permettant de retourner le nom du fichier
     private String getFileName(Part part) {
+        //On récupere tout ce qui se trouve dans le content-disposition
         String contentDisp = part.getHeader("content-disposition");
+        //On sépare chaque contenu dans un tableau
         String[] tokens = contentDisp.split(";");
         for (String token : tokens) {
+            //On recherche le parametre filename
             if (token.trim().startsWith("filename")) {
+                //On renvoie le nom du fichier sans les guillemets
                 return token.substring(token.indexOf("=") + 2, token.length()-1);
             }
         }
