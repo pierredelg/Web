@@ -1,0 +1,39 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="tpjpa13:war exploded">
+    <output-path>$PROJECT_DIR$/target/tpjpa13</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>tpjpa13</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="tpjpa13" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:eclipselink:2.7.0" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" />
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
+          <element id="library" level="project" name="Maven: org.glassfish:javax.json:1.0.4" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.5" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:jakarta.persistence:2.2.3" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:org.eclipse.persistence.asm:2.7.5" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:org.eclipse.persistence.antlr:2.7.5" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:org.eclipse.persistence.jpa.jpql:2.7.5" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:org.eclipse.persistence.core:2.7.5" />
+          <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.2.8" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-text:1.8" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.9" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/tpjpa13/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="tpjpa13/web/Web" />
+    </root>
+  </artifact>
+</component>
