@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.da2i</groupId>
-  <artifactId>projetUpload</artifactId>
+  <artifactId>ctp</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>projetUpload Maven Webapp</name>
+  <name>ctp Maven Webapp</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,13 +17,13 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <!-- Version -->
-    <java.version>1.9</java.version>
+    <java.version>1.8</java.version>
     <javax.servlet.version>4.0.1</javax.servlet.version>
     <junit.version>4.11</junit.version>
     <postgresql.version>42.2.8</postgresql.version>
     <tomcat-plugin.version>2.2</tomcat-plugin.version>
-    <tomcat.http.port>8081</tomcat.http.port>
-    <org.apache.commons.version>3.9</org.apache.commons.version>
+    <tomcat.http.port>8080</tomcat.http.port>
+    <org.apache.commons.version>1.8</org.apache.commons.version>
   </properties>
 
   <dependencies>
@@ -47,12 +47,12 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
-      <version>1.8</version>
+      <version>${org.apache.commons.version}</version>
     </dependency>
   </dependencies>
 
   <build>
-    <finalName>projetUpload</finalName>
+    <finalName>ctp</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
