@@ -2,8 +2,14 @@ package fr.da2i;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Produits.findById",query = "select p from Produits p where p.pno = :pno"),
+        @NamedQuery(name = "Produits.findAll",query = "select p from Produits p")
+})
 public class Produits {
 
   @Id

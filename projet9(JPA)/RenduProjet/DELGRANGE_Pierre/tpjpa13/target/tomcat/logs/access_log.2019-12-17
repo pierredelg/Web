@@ -1,0 +1,14 @@
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:09:35 +0100] "GET /tpjpa13/ListerFournisseurs.jsp HTTP/1.1" 200 15357 http-bio-8080-exec-1 1498
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:09:35 +0100] "GET /tpjpa13/css/style.css HTTP/1.1" 200 1003 http-bio-8080-exec-3 5
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:09:35 +0100] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-4 0
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:09:42 +0100] "GET /tpjpa13/ListerCommandes.jsp HTTP/1.1" 200 27362 http-bio-8080-exec-5 112
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:09:44 +0100] "GET /tpjpa13/ListerCommandesProduits.jsp HTTP/1.1" 200 16791 http-bio-8080-exec-6 119
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:09:51 +0100] "GET /tpjpa13/ListerCommandes.jsp HTTP/1.1" 200 27362 http-bio-8080-exec-8 32
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:18:34 +0100] "GET /tpjpa13/ListerCommandes.jsp HTTP/1.1" 500 667 http-bio-8080-exec-1 1123
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:19:50 +0100] "GET /tpjpa13/ListerCommandes.jsp HTTP/1.1" 500 669 http-bio-8080-exec-1 907
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:22:43 +0100] "GET /tpjpa13/ListerCommandes.jsp HTTP/1.1" 500 676 http-bio-8080-exec-1 908
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:23:41 +0100] "GET /tpjpa13/ListerCommandes.jsp HTTP/1.1" 200 27362 http-bio-8080-exec-1 1361
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:24:22 +0100] "GET /tpjpa13/ListerFournisseurs.jsp HTTP/1.1" 200 15357 http-bio-8080-exec-3 59
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:24:25 +0100] "GET /tpjpa13/ListerCommandesProduits.jsp HTTP/1.1" 200 16791 http-bio-8080-exec-5 66
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:20:35:37 +0100] "GET /tpjpa13/ListerCommandesProduits.jsp HTTP/1.1" 500 1017 http-bio-8080-exec-1 824
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:21:18:34 +0100] "GET /tpjpa13/ListerCommandesProduits.jsp HTTP/1.1" 500 2013 http-bio-8080-exec-1 1315

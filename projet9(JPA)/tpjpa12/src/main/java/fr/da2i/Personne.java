@@ -1,6 +1,19 @@
 package fr.da2i;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "Personne.findByName",query = "select p from Personne p where p.nom = :nom"),
+        @NamedQuery(name = "Personne.findAll",query = "select p from Personne p")
+})
+
 public class Personne {
+
+    @Id
     private int num;
     private String nom;
     private String prenom;
@@ -55,7 +68,21 @@ public class Personne {
     public void setFonction(String fonction) {
         this.fonction = fonction;
     }
+
+    @Override
+    public String toString() {
+        return "Personne{" +
+                "num=" + num +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", tel='" + tel + '\'' +
+                ", fonction='" + fonction + '\'' +
+                '}';
+    }
+
     public String getHTML(){
         return "<td> nom = " + nom + " prenom = " + prenom + "  sexe = " + sexe + "  telephone = " + tel + " fonction = " + fonction + " </td>";
     }
 }
+

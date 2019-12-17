@@ -1,0 +1,3 @@
+create table fournisseurs (fno serial,nom varchar(50),ville varchar(50),constraint pk_fournisseur primary key (fno));
+create table produits (pno serial,libelle varchar(100),prix integer,constraint pk_produits primary key (pno));
+create table commandes(cno serial,pno integer,fno integer,quantite integer,constraint pk_commandes primary key (cno),constraint fk_produits foreign key (pno) references produits(pno) on update cascade ,constraint fk_fournisseurs foreign key (fno) references fournisseurs(fno) on update cascade on delete set null);

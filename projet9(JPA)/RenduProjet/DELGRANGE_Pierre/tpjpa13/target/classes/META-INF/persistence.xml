@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="tpjpa" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>fr.da2i.CommandesEntity</class>
+        <class>fr.da2i.Fournisseurs</class>
+        <class>fr.da2i.Produits</class>
+        <class>fr.da2i.DAOCommandes</class>
+        <class>fr.da2i.DAOFournisseurs</class>
+        <class>fr.da2i.DAOProduits</class>
+        <class>fr.da2i.CommandesEntity</class>
+        <class>fr.da2i.FournisseursEntity</class>
+        <class>fr.da2i.ProduitsEntity</class>
+        <properties>
+            <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/pierre"/>
+            <property name="javax.persistence.jdbc.user" value="pierre"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.password" value="free1234"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432/pierre"/>
+            <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>
+            <!--            <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>-->
+<!--            <property name="javax.persistence.schema-generation.scripts.create-target" value="create.sql"/>-->
+<!--            <property name="javax.persistence.schema-generation.scripts.drop-target" value="drop.sql"/>-->
+<!--            <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/inserer.sql"/>-->
+<!--            <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/supprimer.sql"/>-->
+<!--            <property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/creer.sql"/>-->
+<!--            <property name="javax.persistence.schema-generation.create-source" value="script-then-metadata"/>-->
+<!--            <property name="javax.persistence.schema-generation.drop-source" value="script-then-metadata"/>-->
+<!--            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432/pierre"/>-->
+<!--            <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>-->
+        </properties>
+    </persistence-unit>
+</persistence>

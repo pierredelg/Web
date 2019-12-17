@@ -1,0 +1,1 @@
+mvn exec:java -Dexec.mainClass="fr.da2i.DAOPersonne"

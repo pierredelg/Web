@@ -5,32 +5,29 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public class DAOCommandes implements ClientDAO<Commandes>{
+public class DAOProduits{
 
     private EntityManager em;
 
-    public DAOCommandes() {
+    public DAOProduits() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("tpjpa");
         this.em = emf.createEntityManager();
     }
 
-    @Override
-    public boolean create(Commandes entity) {
+    public boolean create(Produits entity) {
         em.getTransaction().begin();
         em.persist(entity);
         em.getTransaction().commit();
         return true;
     }
 
-    @Override
-    public boolean update(Commandes commandes){
+    public boolean update(Produits produits){
         em.getTransaction().begin();
-        Commandes commandeResult = em.merge(commandes);
+        Produits produitsResult = em.merge(produits);
         em.getTransaction().commit();
-        return commandeResult != null;
+        return produitsResult != null;
     }
 
-    @Override
     public boolean delete(int id) {
         em.getTransaction().begin();
         em.remove(find(id));
@@ -38,18 +35,16 @@ public class DAOCommandes implements ClientDAO<Commandes>{
         return false;
     }
 
-    @Override
-    public Commandes find(int id) {
+    public Produits find(int id) {
         em.getTransaction().begin();
-        List<Commandes> resultList = em.createNamedQuery("Commandes.findById", Commandes.class).setParameter("cno", id).getResultList();
+        Produits produits = em.find(Produits.class,id);
         em.getTransaction().commit();
-        return resultList.get(0);
+        return produits;
     }
 
-    @Override
-    public List<Commandes> findAll(){
+    public List<Produits> findAll(){
         em.getTransaction().begin();
-        List<Commandes> resultList = em.createNamedQuery("Commandes.findAll", Commandes.class).getResultList();
+        List<Produits> resultList = em.createNamedQuery("Produits.findAll", Produits.class).getResultList();
         em.getTransaction().commit();
         return resultList;
 

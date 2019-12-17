@@ -5,7 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public class DAOFournisseurs {
+public class DAOFournisseurs{
 
     private EntityManager em;
 
@@ -14,12 +14,32 @@ public class DAOFournisseurs {
         this.em = emf.createEntityManager();
     }
 
-    public List<Fournisseurs> findById(int id){
+    public boolean create(Fournisseurs entity) {
         em.getTransaction().begin();
-        List<Fournisseurs> resultList = em.createNamedQuery("Fournisseurs.findByName", Fournisseurs.class).setParameter("fno", id).getResultList();
+        em.persist(entity);
         em.getTransaction().commit();
-        return resultList;
+        return false;
+    }
 
+    public boolean update(Fournisseurs fournisseurs){
+        em.getTransaction().begin();
+        Fournisseurs fournisseursResult = em.merge(fournisseurs);
+        em.getTransaction().commit();
+        return fournisseursResult != null;
+    }
+
+    public boolean delete(int id) {
+        em.getTransaction().begin();
+        em.remove(find(id));
+        em.getTransaction().commit();
+        return false;
+    }
+
+    public Fournisseurs find(int id) {
+        em.getTransaction().begin();
+        Fournisseurs fournisseurs = em.find(Fournisseurs.class,id);
+        em.getTransaction().commit();
+        return fournisseurs;
     }
 
     public List<Fournisseurs> findAll(){
@@ -30,22 +50,4 @@ public class DAOFournisseurs {
 
     }
 
-    public void remove(Fournisseurs fournisseurs){
-        em.getTransaction().begin();
-        em.remove(fournisseurs);
-        em.getTransaction().commit();
-    }
-
-    public Fournisseurs update(Fournisseurs fournisseurs){
-        em.getTransaction().begin();
-        Fournisseurs fournisseursResult = em.merge(fournisseurs);
-        em.getTransaction().commit();
-        return fournisseursResult;
-    }
-
-    public void add(Fournisseurs fournisseurs){
-        em.getTransaction().begin();
-        em.persist(fournisseurs);
-        em.getTransaction().commit();
-    }
 }

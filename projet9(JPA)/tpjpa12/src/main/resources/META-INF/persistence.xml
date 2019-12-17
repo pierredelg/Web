@@ -3,7 +3,7 @@
 
     <persistence-unit name="tpjpa" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>fr.da2i.Annuaire</class>
+        <class>fr.da2i.Personne</class>
         <properties>
             <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/pierre"/>
@@ -11,8 +11,6 @@
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.password" value="free1234"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
-            <property name="eclipselink.ddl-generation.output-mode" value="pierre"/>
         </properties>
     </persistence-unit>
 </persistence>
