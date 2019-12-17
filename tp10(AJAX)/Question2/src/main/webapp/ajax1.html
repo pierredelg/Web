@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax1</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script language="JavaScript" type="text/javascript">
+        function appel() {
+            alert("Hello");
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel panel-heading">
+            <strong class="panel-title">Ajax 1 </strong>
+        </div>
+        <div class="panel-body">
+        <form class="well form-horizontal" action="">
+            <div class="form-group">
+                <div class="col-md-8 inputGroupContainer">
+                    <input id="nom" name="nom" placeholder="Nom" class="form-control" type="text" onkeypress="appel()">
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success" onclick="appel()" >Submit</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
