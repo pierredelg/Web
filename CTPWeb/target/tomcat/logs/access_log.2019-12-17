@@ -42,3 +42,5 @@
 0:0:0:0:0:0:0:1 - - [17/Dec/2019:23:36:21 +0100] "POST /ctp/Select HTTP/1.1" 405 1067 http-bio-8080-exec-2 2
 0:0:0:0:0:0:0:1 - - [17/Dec/2019:23:36:23 +0100] "GET /ctp/bouton.html HTTP/1.1" 200 389 http-bio-8080-exec-2 1
 0:0:0:0:0:0:0:1 - - [17/Dec/2019:23:36:24 +0100] "GET /ctp/Select? HTTP/1.1" 200 5675 http-bio-8080-exec-2 32
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:23:53:14 +0100] "GET /ctp/Select.jsp HTTP/1.1" 200 6860 http-bio-8080-exec-1 839
+0:0:0:0:0:0:0:1 - - [17/Dec/2019:23:53:23 +0100] "GET /ctp/Select.jsp HTTP/1.1" 200 6860 http-bio-8080-exec-3 29
