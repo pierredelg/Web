@@ -8,7 +8,7 @@ ainsi que les fichiers présents dans le dossier de l'utilisateur--%>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" id="bootstrap-css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <%@ page contentType="text/html;charset=UTF-8" %>
+    <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
     <%@ page import="java.io.File" %>
     <%@ page import="java.io.IOException" %>
     <%@ page errorPage="Error.jsp" %>

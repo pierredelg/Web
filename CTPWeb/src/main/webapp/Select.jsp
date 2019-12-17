@@ -1,6 +1,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page errorPage="Error.jsp" %>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -64,6 +64,16 @@
          }
     %>
 
+<%--
+    REDIRECTION
+
+    <jsp:forward page="" />
+--%>
+
+<%--
+    INCLUSION D'UNE AUTRE PAGE
+    <jsp:include page="" />
+--%>
 </table>
 </body>
 </html>
