@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax1</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script language="JavaScript" type="text/javascript">
+        var req = new XMLHttpRequest();
+        function check(){
+            setTimeout(appel,5);
+        }
+        function appel() {
+            req.open("GET"," http://localhost:8081/Ajax/Count",true);
+            req.send(null);
+            req.onreadystatechange = retour;
+        }
+        function retour() {
+            $("#nombre").text(req.responseText);
+        }
+    </script>
+</head>
+<body>
+<p>il y a actuellement <span id="nombre">x</span> enregistrements dans la table personnes</p>
+<script>check()</script>
+</body>
+</html>
